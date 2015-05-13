@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Context>
+<Resource name="jdbc/findme" 
+		auth="Container" 
+		type="javax.sql.DataSource"
+		driverClassName="oracle.jdbc.OracleDriver"
+        url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.42.67)(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.42.68)(PORT=1521))(LOAD_BALANCE=yes)(FAILOVER=on))(CONNECT_DATA=(SERVICE_NAME=XJDX)))"
+        username="hdcs" 
+		password="hdcs20143310" 
+        maxActive="100" 
+		maxIdle="30" 
+		maxWait="3000"
+		validationQuery = "SELECT 1 FROM DUAL"  
+        testWhileIdle = "true"   
+        testOnBorrow = "true" 
+        timeBetweenEvictionRunsMillis = "3600000"  
+        minEvictableIdleTimeMillis = "18000000"  
+/> 
+</Context>
