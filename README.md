@@ -1,4 +1,4 @@
-# 例子演示
+# 清瘦的记录着：memory的例子演示
 
 ## 1 准备工作
 
@@ -138,7 +138,7 @@ public class MemoryFactory {
 
 		// 香蕉、苹果、梨、桃、芒果、西瓜
 		String[] fruit = { "Banana", "Apple", "Pear", "Peach", "Mango",
-				"Watermelon" };
+				"Watermelon", "Watermelon"};
 
 		// 批量入库
 		List<Product> products = new ArrayList<Product>();
