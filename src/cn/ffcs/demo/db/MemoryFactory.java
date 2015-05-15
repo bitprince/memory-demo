@@ -25,13 +25,28 @@ public class MemoryFactory {
 	}
 
 	private static class SingletonHolder {
+		/**
+		 * 如果使用MYSQL		
+		 **/
 		public static final Memory MEMORY = new Memory(new SimpleDataSource());
+		// public static final Memory MEMORY = new Memory(getDataSource()); 
+		
+		
+		/**
+		 * 如果使用Oracle
+		 **/
+		// public static final Memory MEMORY = new Memory(new SimpleDataSource(), true);	
+		// public static final Memory MEMORY = new Memory(getDataSource(), true);
+		
 	}
 
 	public static Memory getInstance() {
 		return SingletonHolder.MEMORY;
 	}
-	
+
+	/**
+	 * 在容器(Tomcat)运行状态下，可使用getDataSource()
+	 */
 	public static final DataSource getDataSource() {
 		try {
 			Context context = new InitialContext();
