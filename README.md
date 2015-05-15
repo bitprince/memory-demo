@@ -5,9 +5,9 @@
 在mysql数据库test中,创建一张商品表(product)，同时创建对应的对象(Product)。这里列一些命名规则：
 
 - 表名、字段名是下划线连接，对应类名和属性名则是驼峰式
-- 主键的命名为id, mysql使用自增主键，oracle使用序列，序列的命名为表明_seq，对应属性为long类型的id
+- 主键的命名为id, mysql使用自增主键，oracle使用序列，序列的命名为表名_seq，对应属性为long类型的id
 - 时间类型，mysql为datetime, oracle为date，对应属性为java.uitl.Date类型
-- 布尔类型，mysql为tiny(1), oracle为number(1), 对应属性为boolean类型
+- 布尔类型，mysql为tinyint(1), oracle为number(1), 对应属性为boolean类型
 
 尽管memory也提供主键的名和值自定义的接口，但不建议使用，因为这样可能会增加沟通协作的成本。
 
