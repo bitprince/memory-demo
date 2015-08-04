@@ -7,9 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import cn.ffcs.demo.db.JSONArrayHandler;
 import cn.ffcs.demo.db.JSONObjectHandler;
 import cn.ffcs.demo.db.MemoryFactory;
@@ -18,16 +15,19 @@ import cn.ffcs.memory.BeanListHandler;
 import cn.ffcs.memory.ColumnHandler;
 import cn.ffcs.memory.Memory;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 public class Demo {
 	public static Memory memory = MemoryFactory.getInstance();
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args)  {
 		// testCrud();
 		// testCqrs();
-		testPager();
+		 testPager();
 	}
 
-	public static void testCqrs() throws SQLException {
+	public static void testCqrs() {
 		// 清空仓库中的所有水果（数据）
 		memory.update("delete from product", new Object[] {});
 
@@ -135,7 +135,7 @@ public class Demo {
 		System.out.println(product);
 	}
 
-	public static void testPager() throws SQLException {
+	public static void testPager(){
 		// 清空仓库中的所有水果（数据）
 		memory.update("delete from product", new Object[] {});
 

@@ -9,12 +9,10 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
 import cn.ffcs.memory.ResultSetHandler;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 
@@ -28,65 +26,63 @@ import cn.ffcs.memory.ResultSetHandler;
  * 
  */
 public class JSONArrayHandler implements ResultSetHandler<JSONArray> {
-
+   
 	private boolean camel;
 	private SimpleDateFormat sdf;
 
 	public JSONArrayHandler() {
 		this(true);
-	}	
-	
-	public JSONArrayHandler(boolean camel) {
-		this.camel = camel;
-		this.sdf = new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss");
 	}
 
+	public JSONArrayHandler(boolean camel) {
+		this.camel = camel;
+		this.sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	}
 
 	@Override
-	public JSONArray handle(ResultSet rs) throws SQLException {
-		JSONArray array = new JSONArray();
-
-		ResultSetMetaData rsmd = rs.getMetaData();
-		int columnCount = rsmd.getColumnCount();
-
-		while (rs.next()) {
-			if (columnCount == 1) {
-				array.put(rs.getObject(1));
-				continue;
-			}
-			JSONObject jsonObj = new JSONObject();
-			for (int i = 1; i <= columnCount; i++) {
-				String columnName = rsmd.getColumnLabel(i);
-				Object value = rs.getObject(columnName);
-				if (value == null)
-					value = "";
-
-				if (value instanceof Date) {
-					value = rs.getTimestamp(columnName);
-					value = sdf.format((Date) value);
-				}				
-				
-				if (value instanceof Clob) {
-					Clob clob = (Clob)value;
-					value = clob.getSubString((long)1,(int)clob.length());
+	public JSONArray handle(ResultSet rs) {
+		try {
+			JSONArray array = new JSONArray();
+			
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
+			while (rs.next()) {
+				if (columnCount == 1) {
+					array.add(rs.getObject(1));
+					continue;
 				}
-				
-				try {
+				JSONObject object = new JSONObject();
+				for (int i = 1; i <= columnCount; i++) {
+					String columnName = rsmd.getColumnLabel(i);
+					Object value = rs.getObject(columnName);
+					if (value == null)
+						value = "";
+
+					if (value instanceof Date) {
+						value = rs.getTimestamp(columnName);
+						value = sdf.format((Date) value);
+					}
+
+					if (value instanceof Clob) {
+						Clob clob = (Clob) value;
+						value = clob
+								.getSubString((long) 1, (int) clob.length());
+					}
+
 					if (camel) {
 						columnName = underscore2Camel(columnName);
 					}
-					jsonObj.put(columnName, value);
-				} catch (JSONException e) {
-					throw new SQLException(e);
+					object.put(columnName, value);
+
 				}
+				array.add(object);
 			}
-			array.put(jsonObj);
+			return array;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
-		return array;
 	}
 
-	
 	private String underscore2Camel(String underscore) {
 		StringBuffer buf = new StringBuffer();
 		underscore = underscore.toLowerCase();
@@ -95,5 +91,5 @@ public class JSONArrayHandler implements ResultSetHandler<JSONArray> {
 			m.appendReplacement(buf, m.group(1).toUpperCase());
 		}
 		return m.appendTail(buf).toString();
-	}	
+	}
 }

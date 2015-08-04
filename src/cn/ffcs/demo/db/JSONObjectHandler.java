@@ -9,10 +9,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import cn.ffcs.memory.ResultSetHandler;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 
@@ -41,38 +40,39 @@ public class JSONObjectHandler implements ResultSetHandler<JSONObject> {
 	 * 结果集不包含数据时，返回空的JSON对象
 	 */
 	@Override
-	public JSONObject handle(ResultSet rs) throws SQLException {
-		JSONObject object = new JSONObject();
-		if (rs.next()) {	
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int columnCount = rsmd.getColumnCount();
-			for (int i = 1; i <= columnCount; i++) {
-				String columnName = rsmd.getColumnLabel(i);
-				Object value = rs.getObject(columnName);
-				if (value == null)
-					value = "";
+	public JSONObject handle(ResultSet rs) {
+		try {
+			JSONObject object = new JSONObject();
 
-				if (value instanceof Date) {
-					value = rs.getTimestamp(columnName);
-					value = dateFormat.format((Date) value);
-				}
-				
-				if (value instanceof Clob) {
-					Clob clob = (Clob)value;
-					value = clob.getSubString((long)1,(int)clob.length());
-				}
+			if (rs.next()) {
+				ResultSetMetaData rsmd = rs.getMetaData();
+				int columnCount = rsmd.getColumnCount();
+				for (int i = 1; i <= columnCount; i++) {
+					String columnName = rsmd.getColumnLabel(i);
+					Object value = rs.getObject(columnName);
+					if (value == null)
+						value = "";
 
-				try {
+					if (value instanceof Date) {
+						value = rs.getTimestamp(columnName);
+						value = dateFormat.format((Date) value);
+					}
+
+					if (value instanceof Clob) {
+						Clob clob = (Clob) value;
+						value = clob
+								.getSubString((long) 1, (int) clob.length());
+					}
 					object.put(underscore2Camel(columnName), value);
-				} catch (JSONException e) {
-					throw new SQLException(e);
 				}
 			}
+
+			return object;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
-		return object;
 	}
-	
-	
+
 	public String underscore2Camel(String underscore) {
 		StringBuffer buf = new StringBuffer();
 		underscore = underscore.toLowerCase();
