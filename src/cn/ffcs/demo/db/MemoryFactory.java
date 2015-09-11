@@ -21,23 +21,10 @@ import cn.ffcs.memory.Memory;
 public class MemoryFactory {
 
 	private MemoryFactory() {
-
 	}
 
 	private static class SingletonHolder {
-		/**
-		 * 如果使用MYSQL		
-		 **/
-		public static final Memory MEMORY = new Memory(new SimpleDataSource());
-		// public static final Memory MEMORY = new Memory(getDataSource()); 
-		
-		
-		/**
-		 * 如果使用Oracle
-		 **/
-		// public static final Memory MEMORY = new Memory(new SimpleDataSource(), true);	
-		// public static final Memory MEMORY = new Memory(getDataSource(), true);
-		
+		public static final Memory MEMORY = new Memory(new SimpleDataSource());		
 	}
 
 	public static Memory getInstance() {
