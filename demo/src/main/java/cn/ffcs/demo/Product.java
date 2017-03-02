@@ -1,4 +1,4 @@
-package cn.ffcs.demo.main;
+package cn.ffcs.demo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

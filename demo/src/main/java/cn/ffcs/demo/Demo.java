@@ -1,25 +1,15 @@
-package cn.ffcs.demo.main;
+package cn.ffcs.demo;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-
-import cn.ffcs.demo.db.JSONArrayHandler;
-import cn.ffcs.demo.db.JSONObjectHandler;
-import cn.ffcs.demo.db.MemoryFactory;
-import cn.ffcs.memory.BeanHandler;
-import cn.ffcs.memory.BeanListHandler;
-import cn.ffcs.memory.ColumnHandler;
-import cn.ffcs.memory.Memory;
-
+import cn.ffcs.memory.*;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.sql.SQLException;
+import java.util.*;
+
 public class Demo {
 	public static Memory memory = MemoryFactory.getInstance();
+
 
 	public static void main(String[] args)  {
 		// testCrud();

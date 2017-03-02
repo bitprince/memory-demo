@@ -1,11 +1,11 @@
-package cn.ffcs.demo.db;
+package cn.ffcs.demo;
+
+import cn.ffcs.memory.Memory;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import cn.ffcs.memory.Memory;
 
 /**
  * 
@@ -24,7 +24,9 @@ public class MemoryFactory {
 	}
 
 	private static class SingletonHolder {
-		public static final Memory MEMORY = new Memory(new SimpleDataSource());		
+//		public static final Memory MEMORY = new Memory(new SimpleDataSource());
+		public static final Memory MEMORY = new Memory(getDataSource());
+
 	}
 
 	public static Memory getInstance() {

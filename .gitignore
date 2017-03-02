@@ -2,3 +2,9 @@
 /.classpath
 /.settings
 /build
+/.idea/
+/memory-demo.iml
+/memory/memory.iml
+/demo/demo.iml
+/demo/target/
+/memory/target/

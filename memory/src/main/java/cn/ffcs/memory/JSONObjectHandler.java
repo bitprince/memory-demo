@@ -1,4 +1,6 @@
-package cn.ffcs.demo.db;
+package cn.ffcs.memory;
+
+import com.alibaba.fastjson.JSONObject;
 
 import java.sql.Clob;
 import java.sql.ResultSet;
@@ -8,10 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.ffcs.memory.ResultSetHandler;
-
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * 
